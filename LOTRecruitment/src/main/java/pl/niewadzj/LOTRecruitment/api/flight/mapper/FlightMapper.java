@@ -8,9 +8,8 @@ import java.util.function.Function;
 
 @Service
 public class FlightMapper implements Function<Flight, FlightResponse> {
-
     @Override
-    public FlightResponse apply(Flight flight) {
+    public final FlightResponse apply(Flight flight) {
         return FlightResponse.builder()
                 .id(flight.getId())
                 .flightDateTime(flight.getFlightDateTime())

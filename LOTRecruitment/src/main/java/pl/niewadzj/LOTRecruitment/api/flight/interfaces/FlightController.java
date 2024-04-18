@@ -8,5 +8,13 @@ import java.util.List;
 public interface FlightController {
 
     List<FlightResponse> getFlights();
-    void addFlight(FlightRequest flightRequest);
+
+    FlightResponse addFlight(FlightRequest flightRequest);
+
+    FlightResponse updateFlight(FlightRequest flightRequest, Long id);
+
+    FlightResponse deleteFlight(Long id);
+
+    FlightResponse reserveSeat(Long flightId, Long passengerId);
+    FlightResponse freeOccupiedSeat(Long flightId, Long passengerId);
 }

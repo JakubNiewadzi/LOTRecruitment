@@ -31,7 +31,7 @@ public class Flight {
     @Id
     @GeneratedValue
     private Long id;
-    @Pattern(regexp = "^LO\\d{2,4}$\n")
+    //@Pattern(regexp = "^LO\\d{2,4}$\n")
     private String flightNumber;
     private LocalDateTime flightDateTime;
     @OneToMany
