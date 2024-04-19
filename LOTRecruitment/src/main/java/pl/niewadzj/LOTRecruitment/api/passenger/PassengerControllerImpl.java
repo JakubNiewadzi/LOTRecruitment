@@ -18,34 +18,40 @@ import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 
 import java.util.List;
 
+import static pl.niewadzj.LOTRecruitment.api.passenger.constants.PassengerMappings.ADD_PASSENGER_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.passenger.constants.PassengerMappings.DELETE_PASSENGER_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.passenger.constants.PassengerMappings.GET_PASSENGERS_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.passenger.constants.PassengerMappings.PASSENGER_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.passenger.constants.PassengerMappings.UPDATE_PASSENGER_MAPPING;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/passengers")
+@RequestMapping(PASSENGER_MAPPING)
 @Tag(name = "Passenger", description = "Passenger management APIs")
 public class PassengerControllerImpl implements PassengerController {
 
     private final PassengerService passengerService;
 
     @Override
-    @GetMapping("/get")
+    @GetMapping(GET_PASSENGERS_MAPPING)
     public final List<PassengerResponse> getAll() {
         return passengerService.getAll();
     }
 
     @Override
-    @PostMapping("/add")
+    @PostMapping(ADD_PASSENGER_MAPPING)
     public PassengerResponse addPassenger(@RequestBody @Valid PassengerRequest passengerRequest) {
         return passengerService.addPassenger(passengerRequest);
     }
 
     @Override
-    @DeleteMapping("/delete")
+    @DeleteMapping(DELETE_PASSENGER_MAPPING)
     public PassengerResponse deletePassenger(@RequestParam Long id) {
         return passengerService.deletePassenger(id);
     }
 
     @Override
-    @PutMapping("/update")
+    @PutMapping(UPDATE_PASSENGER_MAPPING)
     public PassengerResponse updatePassenger(@RequestBody PassengerRequest passengerRequest,
                                              @RequestParam Long id) {
         return passengerService.updatePassenger(passengerRequest, id);

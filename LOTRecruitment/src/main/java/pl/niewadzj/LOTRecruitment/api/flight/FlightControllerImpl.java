@@ -19,48 +19,56 @@ import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 
 import java.util.List;
 
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.ADD_FLIGHT_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.DELETE_FLIGHT_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FLIGHTS_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FREE_OCCUPIED_SEAT_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.GET_FLIGHTS_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.RESERVE_SEAT_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.UPDATE_FLIGHT_MAPPING;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/flights")
+@RequestMapping(FLIGHTS_MAPPING)
 @Tag(name = "Flight", description = "Flight management APIs")
 public class FlightControllerImpl implements FlightController {
 
     private final FlightService flightService;
 
     @Override
-    @GetMapping("/get")
+    @GetMapping(GET_FLIGHTS_MAPPING)
     public final List<FlightResponse> getFlights() {
         return flightService.getFlights();
     }
 
     @Override
-    @PostMapping("/add")
+    @PostMapping(ADD_FLIGHT_MAPPING)
     public final FlightResponse addFlight(@RequestBody @Valid FlightRequest flightRequest) {
         return flightService.addFlight(flightRequest);
     }
 
     @Override
-    @PutMapping("/update")
+    @PutMapping(UPDATE_FLIGHT_MAPPING)
     public final FlightResponse updateFlight(@RequestBody @Valid FlightRequest flightRequest,
                                              @RequestParam Long id) {
         return flightService.updateFlight(flightRequest, id);
     }
 
     @Override
-    @DeleteMapping("/delete")
+    @DeleteMapping(DELETE_FLIGHT_MAPPING)
     public final FlightResponse deleteFlight(@RequestParam Long id) {
         return flightService.deleteFlight(id);
     }
 
     @Override
-    @PatchMapping("/reserveSeat")
+    @PatchMapping(RESERVE_SEAT_MAPPING)
     public final FlightResponse reserveSeat(@RequestParam Long flightId,
                                             @RequestParam Long passengerId) {
         return flightService.reserveSeat(flightId, passengerId);
     }
 
     @Override
-    @PatchMapping("/freeOccupiedSeat")
+    @PatchMapping(FREE_OCCUPIED_SEAT_MAPPING)
     public FlightResponse freeOccupiedSeat(@RequestParam Long flightId,
                                            @RequestParam Long passengerId) {
         return flightService.freeOccupiedSeat(flightId, passengerId);
