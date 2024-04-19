@@ -2,8 +2,8 @@ package pl.niewadzj.LOTRecruitment.api.flight;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightMapper;
 import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightService;
-import pl.niewadzj.LOTRecruitment.api.flight.mapper.FlightMapper;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightRequest;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.entities.flight.Flight;
@@ -29,33 +29,29 @@ public class FlightServiceImpl implements FlightService {
     public final List<FlightResponse> getFlights() {
         return flightRepository.findAll()
                 .stream()
-                .map(flightMapper)
+                .map(flightMapper::mapEntityToResponse)
                 .toList();
     }
 
     @Override
     public final FlightResponse addFlight(FlightRequest flightRequest) {
-        Flight flight = Flight.builder()
-                .flightNumber(flightRequest.flightNumber())
-                .flightDateTime(flightRequest.localDateTime())
-                .freeSeats(flightRequest.amountOfSeats())
-                .build();
+        Flight flight = flightMapper.mapRequestToEntity(flightRequest);
 
         flight = flightRepository.saveAndFlush(flight);
-        return flightMapper.apply(flight);
+
+        return flightMapper.mapEntityToResponse(flight);
     }
 
     @Override
     public final FlightResponse updateFlight(FlightRequest flightRequest, Long id) {
-        Flight flight = flightRepository.findById(id)
+        flightRepository.findById(id)
                 .orElseThrow(() -> new FlightNotFoundException(id));
 
-        flight.setFlightNumber(flightRequest.flightNumber());
-        flight.setFlightDateTime(flightRequest.localDateTime());
-        flight.setFreeSeats(flightRequest.amountOfSeats());
+        Flight updatedFlight = flightMapper.mapRequestToEntity(flightRequest);
+        updatedFlight.setId(id);
 
-        flight = flightRepository.saveAndFlush(flight);
-        return flightMapper.apply(flight);
+        updatedFlight = flightRepository.saveAndFlush(updatedFlight);
+        return flightMapper.mapEntityToResponse(updatedFlight);
     }
 
     @Override
@@ -63,8 +59,9 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = flightRepository.findById(id)
                 .orElseThrow(() -> new FlightNotFoundException(id));
 
-        flightRepository.delete(flight);
-        return flightMapper.apply(flight);
+        flightRepository.deleteById(id);
+
+        return flightMapper.mapEntityToResponse(flight);
     }
 
     @Override
@@ -82,8 +79,8 @@ public class FlightServiceImpl implements FlightService {
         flight.setFreeSeats(flight.getFreeSeats() - 1);
         flight.getPassengers().add(passenger);
         flight = flightRepository.saveAndFlush(flight);
-        
-        return flightMapper.apply(flight);
+
+        return flightMapper.mapEntityToResponse(flight);
     }
 
     @Override
@@ -101,6 +98,6 @@ public class FlightServiceImpl implements FlightService {
         flight.setFreeSeats(flight.getFreeSeats() + 1);
         flight = flightRepository.saveAndFlush(flight);
 
-        return flightMapper.apply(flight);
+        return flightMapper.mapEntityToResponse(flight);
     }
 }

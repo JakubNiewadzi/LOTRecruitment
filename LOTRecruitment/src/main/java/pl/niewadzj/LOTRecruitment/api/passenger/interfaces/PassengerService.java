@@ -5,11 +5,12 @@ import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 
 import java.util.List;
 
-public interface PassengerController {
-
+public interface PassengerService {
     List<PassengerResponse> getAll();
-    PassengerResponse addPassenger(PassengerRequest passengerRequest);
-    PassengerResponse deletePassenger(Long id);
-    PassengerResponse updatePassenger(PassengerRequest passengerRequest, Long id);
 
+    PassengerResponse addPassenger(PassengerRequest passengerRequest);
+
+    PassengerResponse deletePassenger(Long id);
+
+    PassengerResponse updatePassenger(PassengerRequest passengerRequest, Long id);
 }

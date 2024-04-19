@@ -4,9 +4,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import pl.niewadzj.LOTRecruitment.exceptions.NotFoundException;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class NotFoundExceptionHandler {
 
     @ExceptionHandler(value = {NotFoundException.class})
