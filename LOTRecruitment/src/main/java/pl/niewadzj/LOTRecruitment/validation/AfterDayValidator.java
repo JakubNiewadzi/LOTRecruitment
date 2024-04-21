@@ -14,7 +14,7 @@ public class AfterDayValidator implements ConstraintValidator<AfterDay, LocalDat
             return true;
         }
 
-        LocalDateTime nextDay = localDateTime.plusDays(1);
+        LocalDateTime nextDay = LocalDateTime.now().plusDays(1);
 
         return localDateTime.isAfter(nextDay);
     }
