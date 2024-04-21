@@ -52,7 +52,7 @@ public class PassengerControllerImpl implements PassengerController {
 
     @Override
     @PutMapping(UPDATE_PASSENGER_MAPPING)
-    public PassengerResponse updatePassenger(@RequestBody PassengerRequest passengerRequest,
+    public PassengerResponse updatePassenger(@RequestBody @Valid PassengerRequest passengerRequest,
                                              @RequestParam Long id) {
         return passengerService.updatePassenger(passengerRequest, id);
     }
