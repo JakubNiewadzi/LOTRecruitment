@@ -6,8 +6,7 @@ import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerRequest;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 import pl.niewadzj.LOTRecruitment.entities.passenger.Passenger;
 import pl.niewadzj.LOTRecruitment.entities.passenger.PhoneNumber;
-
-import java.util.function.Function;
+import pl.niewadzj.LOTRecruitment.utils.StringUtils;
 
 @Service
 public class PassengerMapperImpl implements PassengerMapper {
@@ -29,10 +28,13 @@ public class PassengerMapperImpl implements PassengerMapper {
     public PassengerResponse mapEntityToResponse(Passenger passenger) {
         return PassengerResponse.builder()
                 .id(passenger.getId())
-                .name(String.format("%s %s", passenger.getFirstName(), passenger.getLastName()))
+                .name(String.format("%s %s",
+                        StringUtils.capitalizeString(passenger.getFirstName()),
+                        StringUtils.capitalizeString(passenger.getLastName())))
                 .phoneNumber(String.format("%s %s",
                         passenger.getPhoneNumber().getCountryCode(),
                         passenger.getPhoneNumber().getNumber()))
                 .build();
     }
+
 }

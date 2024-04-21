@@ -8,8 +8,11 @@ import java.util.List;
 public interface PassengerController {
 
     List<PassengerResponse> getAll();
+
     PassengerResponse addPassenger(PassengerRequest passengerRequest);
+
     PassengerResponse deletePassenger(Long id);
+
     PassengerResponse updatePassenger(PassengerRequest passengerRequest, Long id);
 
 }

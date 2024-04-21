@@ -7,6 +7,7 @@ import pl.niewadzj.LOTRecruitment.entities.flight.Flight;
 public interface FlightMapper {
 
     FlightResponse mapEntityToResponse(Flight flight);
+
     Flight mapRequestToEntity(FlightRequest flightRequest);
 
 }

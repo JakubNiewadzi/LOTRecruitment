@@ -5,6 +5,7 @@ import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightMapper;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightRequest;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.entities.flight.Flight;
+import pl.niewadzj.LOTRecruitment.utils.StringUtils;
 
 @Service
 public class FlightMapperImpl implements FlightMapper {
@@ -14,14 +15,18 @@ public class FlightMapperImpl implements FlightMapper {
                 .flightDateTime(flight.getFlightDateTime())
                 .flightNumber(flight.getFlightNumber())
                 .freeSeats(flight.getFreeSeats())
+                .startCity(flight.getStartCity())
+                .destinationCity(flight.getDestinationCity())
                 .build();
     }
 
-    public final Flight mapRequestToEntity(FlightRequest flightRequest){
+    public final Flight mapRequestToEntity(FlightRequest flightRequest) {
         return Flight.builder()
                 .flightNumber(flightRequest.flightNumber())
-                .flightDateTime(flightRequest.localDateTime())
+                .flightDateTime(flightRequest.flightDateTime())
                 .freeSeats(flightRequest.amountOfSeats())
+                .startCity(StringUtils.capitalizeString(flightRequest.startCity()))
+                .destinationCity(StringUtils.capitalizeString(flightRequest.destinationCity()))
                 .build();
     }
 }

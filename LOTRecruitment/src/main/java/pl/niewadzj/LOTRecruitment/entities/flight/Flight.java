@@ -3,20 +3,20 @@ package pl.niewadzj.LOTRecruitment.entities.flight;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import pl.niewadzj.LOTRecruitment.entities.passenger.Passenger;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -31,11 +31,16 @@ public class Flight {
     @Id
     @GeneratedValue
     private Long id;
-    //@Pattern(regexp = "^LO\\d{2,4}$\n")
     private String flightNumber;
+    private String startCity;
+    private String destinationCity;
     private LocalDateTime flightDateTime;
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "flight_passengers",
+            joinColumns = @JoinColumn(name = "flight_id"),
+            inverseJoinColumns = @JoinColumn(name = "passenger_id"))
     @ToString.Exclude
-    private List<Passenger> passengers;
+    private Set<Passenger> passengers;
     private int freeSeats;
 }

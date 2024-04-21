@@ -7,6 +7,7 @@ import pl.niewadzj.LOTRecruitment.entities.passenger.Passenger;
 public interface PassengerMapper {
 
     Passenger mapRequestToEntity(PassengerRequest passengerRequest);
+
     PassengerResponse mapEntityToResponse(Passenger passenger);
 
 }

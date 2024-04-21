@@ -8,6 +8,7 @@ public final class PassengerMappings {
     public static final String DELETE_PASSENGER_MAPPING = "/delete";
     public static final String UPDATE_PASSENGER_MAPPING = "/update";
 
-    private PassengerMappings(){}
+    private PassengerMappings() {
+    }
 
 }

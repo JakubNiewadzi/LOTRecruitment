@@ -8,5 +8,7 @@ import java.time.LocalDateTime;
 public record FlightResponse(Long id,
                              String flightNumber,
                              LocalDateTime flightDateTime,
+                             String startCity,
+                             String destinationCity,
                              int freeSeats) {
 }

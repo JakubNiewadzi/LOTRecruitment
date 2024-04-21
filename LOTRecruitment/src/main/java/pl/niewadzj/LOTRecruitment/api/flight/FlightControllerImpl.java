@@ -16,6 +16,7 @@ import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightController;
 import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightService;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightRequest;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
+import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.DEL
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FLIGHTS_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FREE_OCCUPIED_SEAT_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.GET_FLIGHTS_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.GET_PASSENGERS_BY_FLIGHT_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.RESERVE_SEAT_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.UPDATE_FLIGHT_MAPPING;
 
@@ -72,5 +74,11 @@ public class FlightControllerImpl implements FlightController {
     public FlightResponse freeOccupiedSeat(@RequestParam Long flightId,
                                            @RequestParam Long passengerId) {
         return flightService.freeOccupiedSeat(flightId, passengerId);
+    }
+
+    @Override
+    @GetMapping(GET_PASSENGERS_BY_FLIGHT_MAPPING)
+    public List<PassengerResponse> getPassengersByFlight(@RequestParam Long flightId) {
+        return flightService.getPassengersByFlight(flightId);
     }
 }
