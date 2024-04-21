@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightController;
 import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightService;
+import pl.niewadzj.LOTRecruitment.api.flight.records.FlightFilter;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightRequest;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.ADD_FLIGHT_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.DELETE_FLIGHT_MAPPING;
+import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FILTER_FLIGHTS;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FLIGHTS_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.FREE_OCCUPIED_SEAT_MAPPING;
 import static pl.niewadzj.LOTRecruitment.api.flight.constants.FlightMappings.GET_FLIGHTS_MAPPING;
@@ -80,5 +83,28 @@ public class FlightControllerImpl implements FlightController {
     @GetMapping(GET_PASSENGERS_BY_FLIGHT_MAPPING)
     public List<PassengerResponse> getPassengersByFlight(@RequestParam Long flightId) {
         return flightService.getPassengersByFlight(flightId);
+    }
+
+    @Override
+    @GetMapping(FILTER_FLIGHTS)
+    public List<FlightResponse> filterFlights(@RequestParam(required = false) LocalDateTime minFlightDateTime,
+                                              @RequestParam(required = false) LocalDateTime maxFlightDateTime,
+                                              @RequestParam(required = false) String startCity,
+                                              @RequestParam(required = false) String destinationCity,
+                                              @RequestParam(required = false) String flightNumber,
+                                              @RequestParam(required = false) Integer minFreeSeats,
+                                              @RequestParam(required = false) Integer maxFreeSeats) {
+
+        FlightFilter flightFilter = FlightFilter.builder()
+                .minFlightDateTime(minFlightDateTime)
+                .maxFlightDateTime(maxFlightDateTime)
+                .startCity(startCity)
+                .destinationCity(destinationCity)
+                .minFreeSeats(minFreeSeats)
+                .maxFreeSeats(maxFreeSeats)
+                .flightNumber(flightNumber)
+                .build();
+
+        return flightService.filterFlights(flightFilter);
     }
 }

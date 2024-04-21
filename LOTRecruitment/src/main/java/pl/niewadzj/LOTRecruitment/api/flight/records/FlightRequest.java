@@ -32,7 +32,9 @@ public record FlightRequest(@NotNull(message = NULL_FLIGHT_NUMBER_MESSAGE)
                             @NotNull(message = NULL_CITY_MESSAGE)
                             @Pattern(regexp = CITY_REGEX, message = INVALID_CITY_MESSAGE)
                             String destinationCity,
+
+                            @NotNull
                             @Min(value = MIN_AMOUNT_OF_SEATS, message = MIN_AMOUNT_OF_SEATS_MESSAGE)
                             @Max(value = MAX_AMOUNT_OF_SEATS, message = MAX_AMOUNT_OF_SEATS_MESSAGE)
-                            int amountOfSeats) {
+                            Integer amountOfSeats) {
 }

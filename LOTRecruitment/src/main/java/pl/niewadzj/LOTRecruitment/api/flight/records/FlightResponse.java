@@ -10,5 +10,5 @@ public record FlightResponse(Long id,
                              LocalDateTime flightDateTime,
                              String startCity,
                              String destinationCity,
-                             int freeSeats) {
+                             Integer freeSeats) {
 }

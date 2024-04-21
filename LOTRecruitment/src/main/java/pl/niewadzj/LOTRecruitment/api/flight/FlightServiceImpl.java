@@ -1,15 +1,18 @@
 package pl.niewadzj.LOTRecruitment.api.flight;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightMapper;
 import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightService;
+import pl.niewadzj.LOTRecruitment.api.flight.records.FlightFilter;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightRequest;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.api.passenger.interfaces.PassengerMapper;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 import pl.niewadzj.LOTRecruitment.entities.flight.Flight;
+import pl.niewadzj.LOTRecruitment.entities.flight.FlightSpecification;
 import pl.niewadzj.LOTRecruitment.entities.flight.repository.FlightRepository;
 import pl.niewadzj.LOTRecruitment.entities.passenger.Passenger;
 import pl.niewadzj.LOTRecruitment.entities.passenger.repository.PassengerRepository;
@@ -114,6 +117,16 @@ public class FlightServiceImpl implements FlightService {
         return flight.getPassengers()
                 .stream()
                 .map(passengerMapper::mapEntityToResponse)
+                .toList();
+    }
+
+    @Override
+    public List<FlightResponse> filterFlights(FlightFilter flightFilter) {
+        Specification<Flight> specification = FlightSpecification.filterBy(flightFilter);
+
+        return flightRepository.findAll(specification)
+                .stream()
+                .map(flightMapper::mapEntityToResponse)
                 .toList();
     }
 

@@ -42,5 +42,5 @@ public class Flight {
             inverseJoinColumns = @JoinColumn(name = "passenger_id"))
     @ToString.Exclude
     private Set<Passenger> passengers;
-    private int freeSeats;
+    private Integer freeSeats;
 }

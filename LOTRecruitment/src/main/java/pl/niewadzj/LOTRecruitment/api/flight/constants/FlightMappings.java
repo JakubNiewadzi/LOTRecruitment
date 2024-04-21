@@ -10,6 +10,7 @@ public final class FlightMappings {
     public static final String DELETE_FLIGHT_MAPPING = "/delete";
     public static final String RESERVE_SEAT_MAPPING = "/reserveSeat";
     public static final String FREE_OCCUPIED_SEAT_MAPPING = "/freeOccupiedSeat";
+    public static final String FILTER_FLIGHTS = "/filterFlights";
 
     private FlightMappings() {
     }

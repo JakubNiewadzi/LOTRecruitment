@@ -47,9 +47,9 @@ public class PassengerServiceImpl implements PassengerService {
                 .orElseThrow(() -> new PassengerNotFoundException(id));
 
         passenger.getFlights().forEach(flight -> {
-                            flight.setFreeSeats(flight.getFreeSeats() + 1);
-                            flight.getPassengers().remove(passenger);
-                        });
+            flight.setFreeSeats(flight.getFreeSeats() + 1);
+            flight.getPassengers().remove(passenger);
+        });
 
         flightRepository.saveAllAndFlush(passenger.getFlights());
 
