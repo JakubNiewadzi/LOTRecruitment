@@ -2,10 +2,12 @@ package pl.niewadzj.LOTRecruitment.api.passenger;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.niewadzj.LOTRecruitment.api.passenger.interfaces.PassengerService;
 import pl.niewadzj.LOTRecruitment.api.passenger.mapper.PassengerMapperImpl;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerRequest;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
+import pl.niewadzj.LOTRecruitment.entities.flight.repository.FlightRepository;
 import pl.niewadzj.LOTRecruitment.entities.passenger.Passenger;
 import pl.niewadzj.LOTRecruitment.entities.passenger.repository.PassengerRepository;
 import pl.niewadzj.LOTRecruitment.exceptions.passenger.PassengerNotFoundException;
@@ -18,9 +20,10 @@ public class PassengerServiceImpl implements PassengerService {
 
     private final PassengerMapperImpl passengerMapper;
     private final PassengerRepository passengerRepository;
+    private final FlightRepository flightRepository;
 
     @Override
-    public final List<PassengerResponse> getAll() {
+    public List<PassengerResponse> getAll() {
         return passengerRepository.findAll()
                 .stream()
                 .map(passengerMapper::mapEntityToResponse)
@@ -28,7 +31,7 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public final PassengerResponse addPassenger(PassengerRequest passengerRequest) {
+    public PassengerResponse addPassenger(PassengerRequest passengerRequest) {
         Passenger passenger = passengerMapper
                 .mapRequestToEntity(passengerRequest);
 
@@ -38,9 +41,17 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
+    @Transactional
     public PassengerResponse deletePassenger(Long id) {
         final Passenger passenger = passengerRepository.findById(id)
                 .orElseThrow(() -> new PassengerNotFoundException(id));
+
+        passenger.getFlights().forEach(flight -> {
+                            flight.setFreeSeats(flight.getFreeSeats() + 1);
+                            flight.getPassengers().remove(passenger);
+                        });
+
+        flightRepository.saveAllAndFlush(passenger.getFlights());
 
         passengerRepository.deleteById(id);
 
