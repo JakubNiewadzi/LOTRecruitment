@@ -1,11 +1,11 @@
 spring:
     datasource:
-        url: jdbc:postgresql://localhost:5432/backend
-        username: backend
-        password: admin
+        url: ${DATABASE_URL}
+        username: ${POSTGRES_USER}
+        password: ${POSTGRES_PASSWORD}
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: ${DATABASE_DDL}
         show-sql: true
         properties:
             hibernate:
