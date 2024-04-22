@@ -13,6 +13,7 @@ public final class ValidationConstants {
     public static final String MIN_AMOUNT_OF_SEATS_MESSAGE = "Amount of seats must be a positive integer";
     public static final int MAX_AMOUNT_OF_SEATS = 500;
     public static final String MAX_AMOUNT_OF_SEATS_MESSAGE = "Amount of seats must be at most 500";
+    public static final String NULL_AMOUNT_OF_SEATS_MESSAGE = "Amount of seats cannot be null";
 
     private ValidationConstants() {
     }

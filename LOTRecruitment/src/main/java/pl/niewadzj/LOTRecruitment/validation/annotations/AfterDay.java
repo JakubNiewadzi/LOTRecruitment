@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = AfterDayValidator.class)
 public @interface AfterDay {
-    String message() default "Flight must start at least 24 hours after creation time";
+    String message() default "Flights must start at least 24 hours after creation time";
 
     Class<?>[] groups() default {};
 

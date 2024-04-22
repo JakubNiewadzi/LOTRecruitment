@@ -3,6 +3,8 @@ package pl.niewadzj.LOTRecruitment.api.passenger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.niewadzj.LOTRecruitment.api.flight.interfaces.FlightMapper;
+import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.api.passenger.interfaces.PassengerService;
 import pl.niewadzj.LOTRecruitment.api.passenger.mapper.PassengerMapperImpl;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerRequest;
@@ -21,6 +23,7 @@ public class PassengerServiceImpl implements PassengerService {
     private final PassengerMapperImpl passengerMapper;
     private final PassengerRepository passengerRepository;
     private final FlightRepository flightRepository;
+    private final FlightMapper flightMapper;
 
     @Override
     public List<PassengerResponse> getAll() {
@@ -68,5 +71,16 @@ public class PassengerServiceImpl implements PassengerService {
 
         updatedPassenger = passengerRepository.saveAndFlush(updatedPassenger);
         return passengerMapper.mapEntityToResponse(updatedPassenger);
+    }
+
+    @Override
+    public List<FlightResponse> getFlightsForPassenger(Long id) {
+        final Passenger passenger = passengerRepository.findById(id)
+                .orElseThrow(() -> new PassengerNotFoundException(id));
+
+        return passenger.getFlights()
+                .stream()
+                .map(flightMapper::mapEntityToResponse)
+                .toList();
     }
 }

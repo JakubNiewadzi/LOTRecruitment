@@ -7,6 +7,7 @@ public final class PassengerMappings {
     public static final String ADD_PASSENGER_MAPPING = "/add";
     public static final String DELETE_PASSENGER_MAPPING = "/delete";
     public static final String UPDATE_PASSENGER_MAPPING = "/update";
+    public static final String GET_FLIGHTS_BY_PASSENGER_MAPPING = "/getFlightsByPassenger";
 
     private PassengerMappings() {
     }

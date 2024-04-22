@@ -5,7 +5,6 @@ import pl.niewadzj.LOTRecruitment.api.flight.records.FlightRequest;
 import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface FlightService {

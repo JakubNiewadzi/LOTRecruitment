@@ -1,5 +1,6 @@
 package pl.niewadzj.LOTRecruitment.api.passenger.interfaces;
 
+import pl.niewadzj.LOTRecruitment.api.flight.records.FlightResponse;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerRequest;
 import pl.niewadzj.LOTRecruitment.api.passenger.records.PassengerResponse;
 
@@ -14,5 +15,7 @@ public interface PassengerController {
     PassengerResponse deletePassenger(Long id);
 
     PassengerResponse updatePassenger(PassengerRequest passengerRequest, Long id);
+
+    List<FlightResponse> getFlightsForPassenger(Long id);
 
 }
